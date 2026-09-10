@@ -249,3 +249,31 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif; letter-spacing:-0.01em; colo
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
 }
+
+/* =========================================================
+   MOBILE FIX — collapses every fixed-column layout that was
+   set via inline style="grid-template-columns:..." so nothing
+   gets squeezed sideways on small screens.
+   ========================================================= */
+html,body{overflow-x:hidden;}
+
+@media(max-width:900px){
+  .modules-grid{grid-template-columns:repeat(2,1fr) !important;}
+}
+@media(max-width:720px){
+  .hero-dark-band{padding:80px 0 40px !important;}
+  .page-hero{padding-top:96px !important;}
+  .hero-grid,.spotlight-grid,.customers-grid,.about-grid,.contact-cards-grid{
+    grid-template-columns:1fr !important; gap:28px !important;
+  }
+  .spotlight-grid{gap:24px !important;}
+  h1{font-size:clamp(26px,7vw,34px) !important;}
+}
+@media(max-width:520px){
+  .modules-grid{grid-template-columns:1fr !important;}
+  .mock-body-grid{grid-template-columns:52px 1fr !important; gap:8px !important;}
+  .mock-kpis-grid{gap:5px !important;}
+  .mock-kpis-grid > div{padding:7px !important;}
+  .footer-bottom{flex-direction:column; align-items:flex-start !important; gap:6px !important;}
+  .wrap{padding:0 18px !important;}
+}
