@@ -121,12 +121,15 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif; letter-spacing:-0.01em; colo
 
 @media(max-width:880px){
   .primary-nav{
-    position:fixed; top:60px; left:0; right:0; bottom:0; background:var(--bg);
-    flex-direction:column; align-items:flex-start; padding:22px 24px; gap:0;
+    position:fixed; top:60px; left:auto; right:0; bottom:0; width:70%; max-width:300px; background:var(--bg);
+    flex-direction:column; align-items:flex-start; padding:22px 20px; gap:0;
     transform:translateX(105%); transition:transform .3s ease; z-index:400; overflow-y:auto;
+    box-shadow:-8px 0 24px rgba(0,0,0,0.12);
   }
   .primary-nav.open{transform:translateX(0);}
-  .primary-nav a{width:100%; padding:15px 0; border-bottom:1px solid var(--line); font-size:16px;}
+  .primary-nav a{width:100%; padding:14px 0; border-bottom:1px solid var(--line); font-size:15px; display:flex; align-items:center; gap:12px;}
+  .primary-nav a svg{width:18px; height:18px; flex-shrink:0; color:var(--muted);}
+  .primary-nav a.active svg{color:var(--orange);}
   .menu-toggle{display:block;}
   .header-cta .btn-ghost{display:none;}
 }

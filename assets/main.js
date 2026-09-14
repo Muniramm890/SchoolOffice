@@ -31,19 +31,20 @@
   }
 
   var NAV_LINKS = [
-    { href: 'index.html#modules', label: 'Modules', key: 'modules' },
-    { href: 'index.html#customers', label: 'Customers', key: 'customers' },
-    { href: 'pages/how-to-use.html', label: 'How to Use', key: 'how-to-use' },
-    { href: 'pages/faq.html', label: 'FAQ', key: 'faq' },
-    { href: 'pages/about.html', label: 'About', key: 'about' },
-    { href: 'pages/contact.html', label: 'Contact', key: 'contact' }
+    { href: 'index.html#modules', label: 'Modules', key: 'modules', icon: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>' },
+    { href: 'index.html#customers', label: 'Customers', key: 'customers', icon: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/>' },
+    { href: 'pages/how-to-use.html', label: 'How to Use', key: 'how-to-use', icon: '<path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>' },
+    { href: 'pages/faq.html', label: 'FAQ', key: 'faq', icon: '<circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.5 2.5 0 015 .5c0 1.5-2 2-2 3.5"/><path d="M12 17h.01"/>' },
+    { href: 'pages/about.html', label: 'About', key: 'about', icon: '<circle cx="12" cy="12" r="10"/><path d="M12 8h.01M11 12h1v5h1"/>' },
+    { href: 'pages/contact.html', label: 'Contact', key: 'contact', icon: '<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/>' }
   ];
 
   function navHtml() {
     return NAV_LINKS.map(function (l) {
       var isActive = current === l.key;
       var href = l.href.indexOf('pages/') === 0 ? base + l.href : base + l.href;
-      return '<a href="' + href + '"' + (isActive ? ' class="active"' : '') + '>' + l.label + '</a>';
+      var icon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + l.icon + '</svg>';
+      return '<a href="' + href + '"' + (isActive ? ' class="active"' : '') + '>' + icon + '<span>' + l.label + '</span></a>';
     }).join('');
   }
 
