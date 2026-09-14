@@ -3,6 +3,7 @@
    One source of truth for header, footer and the inquiry modal
    so every page in /pages/ stays in sync automatically.
    ========================================================= */
+  var APP_URL = 'https://dpw5tz.csb.app/'; // 👈 production deploy hone pe yahan apna real app domain daal dena
 
 (function () {
   var base = document.body.getAttribute('data-base') || './';
@@ -52,8 +53,10 @@
         '<div class="header-inner">' +
           lockup('dark', false) +
           '<nav class="primary-nav" id="primaryNav">' + navHtml() + '</nav>' +
-          '<div class="header-cta">' +
+         '<div class="header-cta">' +
             '<button class="btn btn-ghost btn-sm js-open-inquiry">Book a demo</button>' +
+            '<a class="btn btn-ghost btn-sm" href="' + APP_URL + '" target="_blank" rel="noopener">Login</a>' +
+            '<a class="btn btn-primary btn-sm" href="' + APP_URL + '?signup=1" target="_blank" rel="noopener">Register</a>' +
             '<button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">' +
               '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>' +
             '</button>' +
