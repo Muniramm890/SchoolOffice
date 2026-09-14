@@ -33,6 +33,7 @@
   var NAV_LINKS = [
     { href: 'index.html#modules', label: 'Modules', key: 'modules' },
     { href: 'index.html#customers', label: 'Customers', key: 'customers' },
+    { href: 'pages/faq.html', label: 'How it works / FAQ', key: 'faq' },
     { href: 'pages/about.html', label: 'About', key: 'about' },
     { href: 'pages/contact.html', label: 'Contact', key: 'contact' }
   ];
@@ -231,8 +232,28 @@
     });
   }
 
+  function initAccordions() {
+    document.querySelectorAll('.faq-item').forEach(function (item) {
+      var q = item.querySelector('.faq-question');
+      var a = item.querySelector('.faq-answer');
+      if (!q || !a) return;
+      q.addEventListener('click', function () {
+        var isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(function (other) {
+          if (other !== item) {
+            other.classList.remove('open');
+            other.querySelector('.faq-answer').style.maxHeight = null;
+          }
+        });
+        item.classList.toggle('open', !isOpen);
+        a.style.maxHeight = !isOpen ? a.scrollHeight + 'px' : null;
+      });
+    });
+  }
+
   renderHeader();
   renderFooter();
   renderModal();
   runSplash();
+  initAccordions();
 })();
