@@ -115,6 +115,7 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif; letter-spacing:-0.01em; colo
 .primary-nav{display:flex; align-items:center; gap:26px;}
 .primary-nav a{font-size:13.8px; font-weight:600; color:var(--ink-soft); transition:color .2s;}
 .primary-nav a.active,.primary-nav a:hover{color:var(--orange);}
+.primary-nav a svg{display:none;}
 .header-cta{display:flex; align-items:center; gap:10px;}
 .menu-toggle{display:none; background:none; border:none; color:var(--ink); cursor:pointer; padding:6px;}
 .menu-toggle svg{width:21px; height:21px;}
@@ -128,7 +129,7 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif; letter-spacing:-0.01em; colo
   }
   .primary-nav.open{transform:translateX(0);}
   .primary-nav a{width:100%; padding:14px 0; border-bottom:1px solid var(--line); font-size:15px; display:flex; align-items:center; gap:12px;}
-  .primary-nav a svg{width:18px; height:18px; flex-shrink:0; color:var(--muted);}
+  .primary-nav a svg{display:block; width:18px; height:18px; flex-shrink:0; color:var(--muted);}
   .primary-nav a.active svg{color:var(--orange);}
   .menu-toggle{display:block;}
   .header-cta .btn-ghost{display:none;}
