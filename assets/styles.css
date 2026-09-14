@@ -255,7 +255,7 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif; letter-spacing:-0.01em; colo
    set via inline style="grid-template-columns:..." so nothing
    gets squeezed sideways on small screens.
    ========================================================= */
-html,body{overflow-x:hidden;}
+html,body{overflow-x:clip;}
 
 @media(max-width:900px){
   .modules-grid{grid-template-columns:repeat(2,1fr) !important;}
