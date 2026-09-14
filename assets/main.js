@@ -33,7 +33,8 @@
   var NAV_LINKS = [
     { href: 'index.html#modules', label: 'Modules', key: 'modules' },
     { href: 'index.html#customers', label: 'Customers', key: 'customers' },
-    { href: 'pages/faq.html', label: 'How it works / FAQ', key: 'faq' },
+    { href: 'pages/how-to-use.html', label: 'How to Use', key: 'how-to-use' },
+    { href: 'pages/faq.html', label: 'FAQ', key: 'faq' },
     { href: 'pages/about.html', label: 'About', key: 'about' },
     { href: 'pages/contact.html', label: 'Contact', key: 'contact' }
   ];
