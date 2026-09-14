@@ -13,10 +13,13 @@
     return (
       '<svg width="' + size + '" height="' + size + '" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">' +
       '<defs><linearGradient id="mg1-' + size + '" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1E2E52"/><stop offset="100%" stop-color="#0F1A33"/></linearGradient>' +
-      '<linearGradient id="mg2-' + size + '" x1="10%" y1="0%" x2="90%" y2="100%"><stop offset="0%" stop-color="#FFB25B"/><stop offset="100%" stop-color="#E8600A"/></linearGradient></defs>' +
+      '<linearGradient id="mg2-' + size + '" x1="10%" y1="0%" x2="90%" y2="100%"><stop offset="0%" stop-color="#FFB25B"/><stop offset="100%" stop-color="#E8600A"/></linearGradient>' +
+      '<filter id="mgShadow-' + size + '" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0F1A33" flood-opacity="0.28"/></filter></defs>' +
       '<rect x="4" y="4" width="192" height="192" rx="46" fill="url(#mg1-' + size + ')"/>' +
-      '<path d="M62,66 C100,44 152,52 146,82 C141,108 96,96 88,116 C81,134 116,140 150,132" fill="none" stroke="url(#mg2-' + size + ')" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>' +
-      '<circle cx="150" cy="132" r="13" fill="#FFD98A"/></svg>'
+      '<rect x="4.5" y="4.5" width="191" height="191" rx="45.5" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>' +
+      '<path d="M62,66 C100,44 152,52 146,82 C141,108 96,96 88,116 C81,134 116,140 150,132" fill="none" stroke="url(#mg2-' + size + ')" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" filter="url(#mgShadow-' + size + ')"/>' +
+      '<circle cx="150" cy="132" r="13" fill="#FFD98A"/>' +
+      '<circle cx="150" cy="132" r="13" fill="none" stroke="#0F1A33" stroke-width="2" opacity="0.15"/></svg>'
     );
   }
 
