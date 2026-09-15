@@ -3,7 +3,7 @@
    One source of truth for header, footer and the inquiry modal
    so every page in /pages/ stays in sync automatically.
    ========================================================= */
-  var APP_URL = 'https://dpw5tz.csb.app/'; // 👈 production deploy hone pe yahan apna real app domain daal dena
+  var APP_URL = 'https://admin.schooloffice.tech'; // 👈 production deploy hone pe yahan apna real app domain daal dena
 
 (function () {
   var base = document.body.getAttribute('data-base') || './';
