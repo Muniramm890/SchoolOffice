@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathLab — Smart LAB for Smart Schools | School Office</title>
+<meta name="description" content="Interactive math simulations — geometry, algebra and calculus — by School Office.">
+<link rel="canonical" href="https://schooloffice.tech/mathlab/index.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<main>
+  <!-- Controls (Search & Filter) -->
+  <section class="controls">
+    <div class="search-wrap">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="search-input" placeholder="Search simulations (e.g., Geometry)...">
+    </div>
+
+    <div class="filters">
+      <button class="filter-tag active" data-filter="all"><i class="fa-solid fa-layer-group"></i> All</button>
+      <button class="filter-tag" data-filter="geometry"><i class="fa-solid fa-shapes"></i> Geometry</button>
+      <button class="filter-tag" data-filter="algebra"><i class="fa-solid fa-wave-square"></i> Algebra</button>
+      <button class="filter-tag" data-filter="calculus"><i class="fa-solid fa-chart-line"></i> Calculus</button>
+    </div>
+  </section>
+
+  <div class="results-meta">
+    <span id="results-count">Showing 4 of 4 simulations</span>
+  </div>
+
+  <!-- Simulations Grid -->
+  <section class="grid" id="simulations">
+
+    <div class="card" data-category="geometry">
+      <div class="card-top">
+        <div class="card-icon" style="--tag: var(--orange);"><i class="fa-solid fa-shapes"></i></div>
+        <div class="card-tag" style="--tag: var(--orange);">Geometry</div>
+      </div>
+      <h3 class="card-title">Basic Proportionality Theorem</h3>
+      <p class="card-desc">Understand BPT with interactive triangles and real-time ratio calculations.</p>
+      <div class="card-foot">
+        <div class="card-status"><div class="dot"></div> Active</div>
+        <a href="bpt.html" class="card-btn">Launch <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="card" data-category="geometry">
+      <div class="card-top">
+        <div class="card-icon" style="--tag: var(--purple);"><i class="fa-solid fa-play"></i></div>
+        <div class="card-tag" style="--tag: var(--purple);">Geometry</div>
+      </div>
+      <h3 class="card-title">Pythagoras Theorem</h3>
+      <p class="card-desc">Visual proof of the Pythagoras theorem using area models.</p>
+      <div class="card-foot">
+        <div class="card-status"><div class="dot"></div> Active</div>
+        <a href="pythagoras.html" class="card-btn">Launch <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="card" data-category="algebra">
+      <div class="card-top">
+        <div class="card-icon" style="--tag: var(--blue);"><i class="fa-solid fa-wave-square"></i></div>
+        <div class="card-tag" style="--tag: var(--blue);">Algebra</div>
+      </div>
+      <h3 class="card-title">Quadratic Equations</h3>
+      <p class="card-desc">Graphing parabolas and finding roots interactively by adjusting coefficients.</p>
+      <div class="card-foot">
+        <div class="card-status"><div class="dot"></div> Active</div>
+        <a href="quadratic.html" class="card-btn">Launch <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="card" data-category="calculus">
+      <div class="card-top">
+        <div class="card-icon" style="--tag: var(--green);"><i class="fa-solid fa-chart-line"></i></div>
+        <div class="card-tag" style="--tag: var(--green);">Calculus</div>
+      </div>
+      <h3 class="card-title">Derivatives Visualizer</h3>
+      <p class="card-desc">See slopes and tangents in real-time as you drag points.</p>
+      <div class="card-foot">
+        <div class="card-status"><div class="dot"></div> Active</div>
+        <a href="derivatives.html" class="card-btn">Launch <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Empty State (shown by search-filter.js when nothing matches) -->
+  <div class="empty-state" id="empty-state">
+    <i class="fa-solid fa-magnifying-glass-minus"></i>
+    <b>No simulations found</b>
+    <span>Try a different search term or clear the active filter.</span>
+  </div>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<!-- Load header/footer (flat folder — plain filenames, no ../ needed) -->
+<script>
+  fetch('header.html')
+    .then((res) => res.text())
+    .then((html) => {
+      document.getElementById('header-placeholder').innerHTML = html;
+      // canvas element only exists once header is injected — load canvas.js now
+      const s = document.createElement('script');
+      s.src = 'canvas.js';
+      document.body.appendChild(s);
+    });
+
+  fetch('footer.html')
+    .then((res) => res.text())
+    .then((html) => {
+      document.getElementById('footer-placeholder').innerHTML = html;
+    });
+</script>
+
+<script src="search-filter.js"></script>
+
+</body>
+</html>
