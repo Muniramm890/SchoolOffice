@@ -18,6 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./assets/styles.css">
+<link rel="stylesheet" href="./components/bg-slider.css">
 
 <script type="application/ld+json">
 {
@@ -98,13 +99,25 @@
   <section class="band-dark hero-dark-band" style="padding:104px 0 64px; position:relative; overflow:hidden;">
     <div style="position:absolute; top:-200px; right:-140px; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle, rgba(232,96,10,.2) 0%, transparent 70%); pointer-events:none;"></div>
     <div class="wrap hero-grid" style="display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center; position:relative; z-index:1;">
-      <div>
-        <span class="eyebrow"><span class="dot"></span> MSME-registered · Udyam-RJ-01-0149665</span>
-        <h1 style="font-size:clamp(30px,4.4vw,46px); margin:16px 0 14px; max-width:560px;">One school office, running on one screen.</h1>
-        <p style="max-width:460px; font-size:16px; margin-bottom:26px;">School Office replaces registers, spreadsheets and separate apps with a single dashboard for admissions, attendance, timetables, fees, exams and results.</p>
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <button class="btn btn-primary js-open-inquiry">Book a demo</button>
-          <a class="btn btn-ghost-dark" href="#modules">Browse modules</a>
+           <div style="position:relative; overflow:hidden; border-radius:16px; padding:24px; margin:-24px;">
+        <!-- Reusable background slider component — swap PLACEHOLDER_IMAGE_n later -->
+        <div class="bg-slider">
+          <div class="bg-slide" style="background-image:url('https://res.cloudinary.com/vosr6w5p/image/upload/v1789791429/kwuiuoqqmjyi3djmpilv.jpg');"></div>
+          <div class="bg-slide" style="background-image:url('https://res.cloudinary.com/vosr6w5p/image/upload/v1789806136/file_00000000dabc82118d97ca8b37d24d75.png');"></div>
+          <div class="bg-slide" style="background-image:url('https://res.cloudinary.com/vosr6w5p/image/upload/v1789806173/file_0000000073608211afec97a53539526a.png');"></div>
+          <div class="bg-slide" style="background-image:url('https://res.cloudinary.com/vosr6w5p/image/upload/v1789806169/file_00000000bcac82118b7b2eaac37e9215.png');"></div>
+          <div class="bg-slide" style="background-image:url('https://res.cloudinary.com/vosr6w5p/image/upload/v1789806158/file_00000000c2d88207b08227cef548fbcf.png');"></div>
+          <div class="bg-slider-overlay"></div>
+        </div>
+
+        <div style="position:relative; z-index:1;">
+          <span class="eyebrow"><span class="dot"></span> MSME-registered · Udyam-RJ-01-0149665</span>
+          <h1 style="font-size:clamp(30px,4.4vw,46px); margin:16px 0 14px; max-width:560px;">One school office, running on one screen.</h1>
+          <p style="max-width:460px; font-size:16px; margin-bottom:26px;">School Office replaces registers, spreadsheets and separate apps with a single dashboard for admissions, attendance, timetables, fees, exams and results.</p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button class="btn btn-primary js-open-inquiry">Book a demo</button>
+            <a class="btn btn-ghost-dark" href="#modules">Browse modules</a>
+          </div>
         </div>
       </div>
 
