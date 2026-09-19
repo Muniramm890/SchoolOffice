@@ -112,6 +112,7 @@
           '</div>' +
           '<div class="footer-col"><h5>Company</h5>' +
             '<a href="' + base + 'pages/about.html">About us</a>' +
+             '<a href="' + base + 'pages/our-team.html">Our Team</a>' + 
             '<a href="' + base + 'pages/contact.html">Contact</a>' +
           '</div>' +
           '<div class="footer-col"><h5>Legal</h5>' +
