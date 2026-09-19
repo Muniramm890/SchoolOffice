@@ -108,6 +108,7 @@
             '<a href="' + base + 'index.html#modules">Modules overview</a>' +
             '<a href="' + base + 'index.html#modules">Attendance &amp; fees</a>' +
             '<a href="' + base + 'index.html#customers">Customer stories</a>' +
+            '<a href="' + base + 'mathlab/index.html">Math Lab</a>' +
           '</div>' +
           '<div class="footer-col"><h5>Company</h5>' +
             '<a href="' + base + 'pages/about.html">About us</a>' +
