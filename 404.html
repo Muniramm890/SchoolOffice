@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — School Office</title>
+<meta name="robots" content="noindex, follow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./assets/styles.css">
+
+<style>
+  .notfound-band{
+    min-height:72vh; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:60px 24px;
+  }
+  .notfound-code{
+    font-family:'Space Grotesk',sans-serif; font-weight:700;
+    font-size:clamp(64px,12vw,120px); line-height:1;
+    background:linear-gradient(120deg, var(--orange), var(--orange-dark));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    margin-bottom:8px;
+  }
+  .notfound-actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:26px; }
+</style>
+</head>
+<body data-base="./" data-page="404">
+
+<div id="site-header-root"></div>
+
+<main>
+  <section class="notfound-band">
+    <div class="wrap" style="max-width:520px;">
+      <div class="notfound-code">404</div>
+      <h1 class="section-title" style="margin:0 auto 12px; max-width:none;">This page took a leave of absence.</h1>
+      <p class="section-sub" style="margin:0 auto; max-width:none;">The page you're looking for doesn't exist, may have moved, or the link might be mistyped. Let's get you back on track.</p>
+      <div class="notfound-actions">
+        <a class="btn btn-primary" href="./index.html">Back to home</a>
+        <a class="btn btn-ghost" href="./pages/contact.html">Contact support</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer-root"></div>
+
+<script src="./assets/main.js"></script>
+</body>
+</html>
