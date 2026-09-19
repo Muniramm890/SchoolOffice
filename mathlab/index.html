@@ -7,28 +7,60 @@
 <meta name="description" content="Interactive math simulations — geometry, algebra and calculus — by School Office.">
 <link rel="canonical" href="https://schooloffice.tech/mathlab/index.html">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../assets/styles.css">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-base="../" data-page="mathlab">
 
+<!-- Splash — identical to the rest of the site, driven by assets/main.js -->
+<div id="splash">
+  <div class="splash-logo-wrap">
+    <div class="splash-glow"></div>
+    <div class="splash-ring"></div>
+    <div class="splash-ring r2"></div>
+    <svg class="splash-mark" width="84" height="84" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="splashmg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1E2E52"/><stop offset="100%" stop-color="#0F1A33"/></linearGradient>
+        <linearGradient id="splashmg2" x1="10%" y1="0%" x2="90%" y2="100%"><stop offset="0%" stop-color="#FFB25B"/><stop offset="100%" stop-color="#E8600A"/></linearGradient>
+      </defs>
+      <rect x="4" y="4" width="192" height="192" rx="46" fill="url(#splashmg1)"/>
+      <path d="M62,66 C100,44 152,52 146,82 C141,108 96,96 88,116 C81,134 116,140 150,132" fill="none" stroke="url(#splashmg2)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="150" cy="132" r="13" fill="#FFD98A"/>
+    </svg>
+  </div>
+  <span class="splash-word"><span style="color:#F4F6FB">School</span><span style="color:#E8600A">Office</span></span>
+  <span class="splash-tag">Smart ERP for Smart Schools</span>
+  <div class="splash-dots"><div class="splash-dot"></div><div class="splash-dot"></div><div class="splash-dot"></div></div>
+</div>
+
+<!-- MathLab's own header + hero (not the site's main nav) -->
 <div id="header-placeholder"></div>
 
 <main>
-  <!-- Controls (Search & Filter) -->
   <section class="controls">
     <div class="search-wrap">
-      <i class="fa-solid fa-magnifying-glass"></i>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
       <input type="text" id="search-input" placeholder="Search simulations (e.g., Geometry)...">
     </div>
 
     <div class="filters">
-      <button class="filter-tag active" data-filter="all"><i class="fa-solid fa-layer-group"></i> All</button>
-      <button class="filter-tag" data-filter="geometry"><i class="fa-solid fa-shapes"></i> Geometry</button>
-      <button class="filter-tag" data-filter="algebra"><i class="fa-solid fa-wave-square"></i> Algebra</button>
-      <button class="filter-tag" data-filter="calculus"><i class="fa-solid fa-chart-line"></i> Calculus</button>
+      <button class="filter-tag active" data-filter="all">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        All
+      </button>
+      <button class="filter-tag" data-filter="geometry">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l9-13 9 13H3z"/></svg>
+        Geometry
+      </button>
+      <button class="filter-tag" data-filter="algebra">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c3-7 6 7 9 0s6-7 9 0"/></svg>
+        Algebra
+      </button>
+      <button class="filter-tag" data-filter="calculus">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/></svg>
+        Calculus
+      </button>
     </div>
   </section>
 
@@ -36,92 +68,84 @@
     <span id="results-count">Showing 4 of 4 simulations</span>
   </div>
 
-  <!-- Simulations Grid -->
   <section class="grid" id="simulations">
 
     <div class="card" data-category="geometry">
       <div class="card-top">
-        <div class="card-icon" style="--tag: var(--orange);"><i class="fa-solid fa-shapes"></i></div>
-        <div class="card-tag" style="--tag: var(--orange);">Geometry</div>
+        <div class="icon-badge card-icon" style="--accent:var(--orange)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l9-13 9 13H3z"/></svg></div>
+        <div class="card-tag" style="--accent:var(--orange)">Geometry</div>
       </div>
       <h3 class="card-title">Basic Proportionality Theorem</h3>
       <p class="card-desc">Understand BPT with interactive triangles and real-time ratio calculations.</p>
       <div class="card-foot">
         <div class="card-status"><div class="dot"></div> Active</div>
-        <a href="bpt.html" class="card-btn">Launch <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="bpt.html" class="card-btn">Launch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
       </div>
     </div>
 
     <div class="card" data-category="geometry">
       <div class="card-top">
-        <div class="card-icon" style="--tag: var(--purple);"><i class="fa-solid fa-play"></i></div>
-        <div class="card-tag" style="--tag: var(--purple);">Geometry</div>
+        <div class="icon-badge card-icon" style="--accent:var(--purple)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 15l4-4 4 4 8-8"/></svg></div>
+        <div class="card-tag" style="--accent:var(--purple)">Geometry</div>
       </div>
       <h3 class="card-title">Pythagoras Theorem</h3>
       <p class="card-desc">Visual proof of the Pythagoras theorem using area models.</p>
       <div class="card-foot">
         <div class="card-status"><div class="dot"></div> Active</div>
-        <a href="pythagoras.html" class="card-btn">Launch <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="pythagoras.html" class="card-btn">Launch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
       </div>
     </div>
 
     <div class="card" data-category="algebra">
       <div class="card-top">
-        <div class="card-icon" style="--tag: var(--blue);"><i class="fa-solid fa-wave-square"></i></div>
-        <div class="card-tag" style="--tag: var(--blue);">Algebra</div>
+        <div class="icon-badge card-icon" style="--accent:var(--blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c3-7 6 7 9 0s6-7 9 0"/></svg></div>
+        <div class="card-tag" style="--accent:var(--blue)">Algebra</div>
       </div>
       <h3 class="card-title">Quadratic Equations</h3>
       <p class="card-desc">Graphing parabolas and finding roots interactively by adjusting coefficients.</p>
       <div class="card-foot">
         <div class="card-status"><div class="dot"></div> Active</div>
-        <a href="quadratic.html" class="card-btn">Launch <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="quadratic.html" class="card-btn">Launch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
       </div>
     </div>
 
     <div class="card" data-category="calculus">
       <div class="card-top">
-        <div class="card-icon" style="--tag: var(--green);"><i class="fa-solid fa-chart-line"></i></div>
-        <div class="card-tag" style="--tag: var(--green);">Calculus</div>
+        <div class="icon-badge card-icon" style="--accent:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/></svg></div>
+        <div class="card-tag" style="--accent:var(--green)">Calculus</div>
       </div>
       <h3 class="card-title">Derivatives Visualizer</h3>
       <p class="card-desc">See slopes and tangents in real-time as you drag points.</p>
       <div class="card-foot">
         <div class="card-status"><div class="dot"></div> Active</div>
-        <a href="derivatives.html" class="card-btn">Launch <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="derivatives.html" class="card-btn">Launch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
       </div>
     </div>
 
   </section>
 
-  <!-- Empty State (shown by search-filter.js when nothing matches) -->
   <div class="empty-state" id="empty-state">
-    <i class="fa-solid fa-magnifying-glass-minus"></i>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
     <b>No simulations found</b>
     <span>Try a different search term or clear the active filter.</span>
   </div>
 </main>
 
-<div id="footer-placeholder"></div>
+<!-- Real site footer — rendered by assets/main.js, not duplicated -->
+<div id="site-footer-root"></div>
 
-<!-- Load header/footer (flat folder — plain filenames, no ../ needed) -->
 <script>
   fetch('header.html')
     .then((res) => res.text())
     .then((html) => {
       document.getElementById('header-placeholder').innerHTML = html;
-      // canvas element only exists once header is injected — load canvas.js now
       const s = document.createElement('script');
       s.src = 'canvas.js';
       document.body.appendChild(s);
     });
-
-  fetch('footer.html')
-    .then((res) => res.text())
-    .then((html) => {
-      document.getElementById('footer-placeholder').innerHTML = html;
-    });
 </script>
 
+<script src="../assets/main.js"></script>
 <script src="search-filter.js"></script>
 
 </body>
