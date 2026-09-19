@@ -1,55 +1,65 @@
 // mathlab/canvas.js
-// Floating math-symbol animation, drawn inside the header only.
+// Professional node-network animation, orange-tinted, drawn only
+// inside the dark hero band (#labCanvas), matching the brand's
+// restrained motion language rather than a busy/playful effect.
 (function () {
-  const canvas = document.getElementById('bgCanvas');
-  if (!canvas) return; // header not injected yet / not found — skip safely
+  const canvas = document.getElementById('labCanvas');
+  if (!canvas) return;
 
   const ctx = canvas.getContext('2d');
-  const header = canvas.closest('.lab-header');
+  const band = canvas.closest('.lab-hero-band');
+  let w, h, dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let nodes = [];
 
-  function resizeCanvas() {
-    const rect = header.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
+  function resize() {
+    const rect = band.getBoundingClientRect();
+    w = rect.width; h = rect.height;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const count = Math.min(46, Math.round((w * h) / 26000));
+    nodes = Array.from({ length: count }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.22,
+      vy: (Math.random() - 0.5) * 0.22,
+      r: 1 + Math.random() * 1.4
+    }));
   }
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
+  window.addEventListener('resize', resize);
+  resize();
 
-  const symbols = ['π', '∫', '∑', '∞', '√', 'θ', 'Δ', 'Ω'];
-  const particles = [];
+  function tick() {
+    ctx.clearRect(0, 0, w, h);
 
-  class MathParticle {
-    constructor() {
-      this.reset(true);
+    for (const n of nodes) {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > w) n.vx *= -1;
+      if (n.y < 0 || n.y > h) n.vy *= -1;
     }
-    reset(initial) {
-      this.x = Math.random() * canvas.width;
-      this.y = initial ? Math.random() * canvas.height : canvas.height + 20;
-      this.symbol = symbols[Math.floor(Math.random() * symbols.length)];
-      this.size = Math.random() * 16 + 10;
-      this.speedY = Math.random() * 0.6 + 0.15;
-      this.opacity = Math.random() * 0.25 + 0.08;
+
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          ctx.strokeStyle = `rgba(232,96,10,${0.14 * (1 - dist / 120)})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
     }
-    update() {
-      this.y -= this.speedY;
-      if (this.y < -30) this.reset(false);
+
+    for (const n of nodes) {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,178,91,0.55)';
+      ctx.fill();
     }
-    draw() {
-      ctx.fillStyle = `rgba(255, 178, 91, ${this.opacity})`; // orange-light with opacity
-      ctx.font = `${this.size}px sans-serif`;
-      ctx.fillText(this.symbol, this.x, this.y);
-    }
+
+    requestAnimationFrame(tick);
   }
-
-  for (let i = 0; i < 24; i++) particles.push(new MathParticle());
-
-  function animateCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach((p) => {
-      p.update();
-      p.draw();
-    });
-    requestAnimationFrame(animateCanvas);
-  }
-  animateCanvas();
+  requestAnimationFrame(tick);
 })();
