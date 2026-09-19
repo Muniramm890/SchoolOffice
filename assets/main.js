@@ -118,7 +118,7 @@
           '<div class="footer-col"><h5>Legal</h5>' +
             '<a href="' + base + 'pages/privacy-policy.html">Privacy policy</a>' +
             '<a href="' + base + 'pages/disclaimer.html">Disclaimer</a>' +
-            '<a href="' + base + 'pages/ refund-policy.html">Refund Policy</a>' +
+            '<a href="' + base + 'pages/refund-policy.html">Refund Policy</a>' +
            
           '</div>' +
         '</div>' +
