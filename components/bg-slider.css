@@ -1,0 +1,74 @@
+/* ============================================================
+   Reusable auto-crossfade background image slider
+   ------------------------------------------------------------
+   Usage — drop this exact markup into ANY position:relative,
+   overflow:hidden container (a hero text column, an empty
+   right-side column on another page, a card, etc.):
+
+     <div class="bg-slider">
+       <div class="bg-slide" style="background-image:url('IMG_1');"></div>
+       <div class="bg-slide" style="background-image:url('IMG_2');"></div>
+       <div class="bg-slide" style="background-image:url('IMG_3');"></div>
+       <div class="bg-slide" style="background-image:url('IMG_4');"></div>
+       <div class="bg-slide" style="background-image:url('IMG_5');"></div>
+       <div class="bg-slider-overlay"></div>
+     </div>
+
+   Then place your real text/content as a sibling *after* this
+   block, with position:relative; z-index:1 (or higher) so it
+   sits above the slider. The parent container needs its own
+   position:relative + overflow:hidden — this component does
+   not set that on the page's actual content box for you.
+
+   Tuned for 5 images: ~2.5s hold per image + smooth crossfade,
+   17.5s full loop. If you use a different number of images,
+   see the "adjust for N images" note at the bottom of this file.
+   ============================================================ */
+
+.bg-slider{
+  position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none;
+  border-radius:inherit;
+}
+
+.bg-slide{
+  position:absolute; inset:0;
+  background-size:cover; background-position:center;
+  opacity:0;
+  filter:saturate(85%) brightness(0.8);
+  animation:bgSlideFade 17.5s infinite;
+}
+.bg-slide:nth-child(1){ animation-delay:0s; }
+.bg-slide:nth-child(2){ animation-delay:-3.5s; }
+.bg-slide:nth-child(3){ animation-delay:-7s; }
+.bg-slide:nth-child(4){ animation-delay:-10.5s; }
+.bg-slide:nth-child(5){ animation-delay:-14s; }
+
+@keyframes bgSlideFade{
+  0%, 100%{ opacity:0; }
+  3%{ opacity:1; }
+  17%{ opacity:1; }
+  20%{ opacity:0; }
+}
+
+/* Uniform dark scrim so text placed on top stays readable
+   no matter which photo is showing underneath — photos read
+   as a subtle, living texture rather than a competing image. */
+.bg-slider-overlay{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(180deg, rgba(11,18,36,.82) 0%, rgba(11,18,36,.88) 100%);
+}
+
+@media (prefers-reduced-motion:reduce){
+  .bg-slide{ animation:none; opacity:1; }
+  .bg-slide:not(:first-child){ display:none; }
+}
+
+/* ------------------------------------------------------------
+   Adjust for N images (only if you ever use a count other
+   than 5): total loop duration = N x 3.5s. Each slide's
+   animation-delay = -(index x 3.5s), 0-indexed, negative.
+   E.g. for 3 images: animation:bgSlideFade 10.5s infinite;
+   with delays 0s, -3.5s, -7s — and update keyframe percentages
+   proportionally (3%/17%/20% become roughly 5%/28%/33%).
+   ------------------------------------------------------------ */
