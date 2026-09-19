@@ -1,0 +1,997 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Ultimate Coordinate Geometry Interactive Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS — "Digital Blueprint" theme
+   ============================================================ */
+:root{
+  --bg-deep:     #0a0d16;
+  --bg-panel:    rgba(18,23,36,0.6);
+  --bg-panel-2:  rgba(15,19,30,0.75);
+  --line:        rgba(255,255,255,0.09);
+  --line-soft:   rgba(255,255,255,0.05);
+  --text-hi:     #eaf0fb;
+  --text-mid:    #94a3c4;
+  --text-low:    #57648a;
+  --cyan:        #35e6f0;
+  --pink:        #ff3fa4;
+  --green:       #3dffa0;
+  --amber:       #ffc35c;
+  --font-display:'Space Grotesk', sans-serif;
+  --font-body:   'Inter', sans-serif;
+  --font-mono:   'JetBrains Mono', monospace;
+  --radius-lg:   18px;
+  --radius-md:   12px;
+  --radius-sm:   8px;
+}
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  background:
+    linear-gradient(rgba(53,230,240,0.035) 1px, transparent 1px) 0 0/38px 38px,
+    linear-gradient(90deg, rgba(53,230,240,0.035) 1px, transparent 1px) 0 0/38px 38px,
+    radial-gradient(circle at 15% -10%, rgba(255,63,164,0.08), transparent 45%),
+    radial-gradient(circle at 100% 0%, rgba(53,230,240,0.08), transparent 45%),
+    var(--bg-deep);
+  color:var(--text-hi);
+  font-family:var(--font-body);
+  -webkit-font-smoothing:antialiased;
+  overscroll-behavior:none;
+}
+*{ scrollbar-width:thin; scrollbar-color:var(--line) transparent; }
+::-webkit-scrollbar{ width:8px; height:8px; }
+::-webkit-scrollbar-thumb{ background:var(--line); border-radius:8px; }
+a{ color:inherit; text-decoration:none; }
+button{ font-family:inherit; }
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky; top:0; z-index:60;
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:12px 22px;
+  background:rgba(10,13,22,0.78);
+  backdrop-filter:blur(14px) saturate(150%);
+  border-bottom:1px solid var(--line-soft);
+}
+.brand{ display:flex; align-items:center; gap:10px; }
+.brand-mark{
+  width:30px; height:30px; border-radius:8px; flex:none;
+  background:linear-gradient(135deg, var(--cyan), var(--pink));
+  box-shadow:0 0 14px rgba(53,230,240,0.45);
+  display:flex; align-items:center; justify-content:center; font-weight:700; color:#04121a; font-size:13px;
+  font-family:var(--font-display);
+}
+.brand-text b{ font-family:var(--font-display); font-size:14.5px; display:block; }
+.brand-text span{ font-size:10.5px; color:var(--text-low); font-family:var(--font-mono); }
+.back-link{
+  font-size:12.5px; color:var(--text-mid); border:1px solid var(--line); padding:8px 13px;
+  border-radius:999px; display:flex; align-items:center; gap:7px; transition:all .15s ease;
+}
+.back-link:hover{ color:var(--text-hi); border-color:var(--text-low); }
+
+/* ---------- layout ---------- */
+.layout{
+  display:grid; grid-template-columns:340px 1fr; gap:18px;
+  max-width:1580px; margin:0 auto; padding:18px 20px 40px; align-items:start;
+}
+@media (max-width:980px){
+  .layout{ grid-template-columns:1fr; }
+}
+
+/* ---------- glass card ---------- */
+.card{
+  background:linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2));
+  border:1px solid var(--line); border-radius:var(--radius-lg);
+  backdrop-filter:blur(16px) saturate(140%);
+  box-shadow:0 20px 40px -26px rgba(0,0,0,0.7);
+}
+.card + .card{ margin-top:14px; }
+.card-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:13px 16px; border-bottom:1px solid var(--line-soft);
+}
+.card-head h2{ margin:0; font-family:var(--font-display); font-size:13.5px; font-weight:600; }
+.card-head .eyebrow{ font-family:var(--font-mono); font-size:10px; color:var(--cyan); text-transform:uppercase; letter-spacing:1px; }
+.card-body{ padding:14px 16px 16px; }
+
+/* ---------- sidebar ---------- */
+.sidebar{ position:sticky; top:70px; max-height:calc(100vh - 84px); overflow-y:auto; padding-right:2px; }
+
+/* mode tabs */
+.mode-tabs{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.mode-tab{
+  display:flex; flex-direction:column; align-items:flex-start; gap:2px;
+  padding:11px 12px; border-radius:var(--radius-md); border:1px solid var(--line);
+  background:var(--bg-panel-2); cursor:pointer; transition:all .15s ease; touch-action:manipulation;
+}
+.mode-tab .t{ font-size:12.5px; font-weight:600; color:var(--text-hi); }
+.mode-tab .s{ font-size:10px; color:var(--text-low); font-family:var(--font-mono); }
+.mode-tab:hover{ border-color:var(--text-low); transform:translateY(-1px); }
+.mode-tab.active{
+  border-color:transparent;
+  background:linear-gradient(135deg, rgba(53,230,240,0.18), rgba(255,63,164,0.14));
+  box-shadow:inset 0 0 0 1px rgba(53,230,240,0.4), 0 8px 20px -10px rgba(53,230,240,0.4);
+}
+.mode-tab.active .t{ color:var(--cyan); }
+
+/* generic controls */
+.field{ margin-bottom:14px; }
+.field:last-child{ margin-bottom:0; }
+.field-label{
+  display:flex; justify-content:space-between; align-items:baseline;
+  font-size:12px; color:var(--text-mid); margin-bottom:8px;
+}
+.field-label b{ color:var(--text-hi); }
+.field-label .val{
+  font-family:var(--font-mono); font-size:12px; color:var(--cyan);
+  background:rgba(53,230,240,0.08); padding:1px 8px; border-radius:6px;
+}
+input[type=range]{
+  -webkit-appearance:none; width:100%; height:5px; border-radius:6px; background:var(--line); outline:none; cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:17px; height:17px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #fff, var(--cyan) 60%);
+  box-shadow:0 0 10px rgba(53,230,240,0.7); border:2px solid #04121a; cursor:pointer;
+}
+input[type=range]::-moz-range-thumb{
+  width:17px; height:17px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #fff, var(--cyan) 60%);
+  box-shadow:0 0 10px rgba(53,230,240,0.7); border:2px solid #04121a; cursor:pointer;
+}
+.tick-row{ display:flex; justify-content:space-between; font-size:9.5px; color:var(--text-low); font-family:var(--font-mono); margin-top:5px; }
+
+.toggle-line{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 13px; border:1px solid var(--line); border-radius:var(--radius-md);
+  background:var(--bg-panel-2); margin-top:10px;
+}
+.toggle-line .lbl{ font-size:12.5px; color:var(--text-hi); }
+.switch{ position:relative; width:38px; height:22px; flex:none; }
+.switch input{ opacity:0; width:0; height:0; }
+.switch .track{ position:absolute; inset:0; background:var(--line); border-radius:99px; cursor:pointer; transition:.2s; }
+.switch .track::after{ content:""; position:absolute; top:3px; left:3px; width:16px; height:16px; border-radius:50%; background:var(--text-mid); transition:.2s; }
+.switch input:checked + .track{ background:rgba(53,230,240,0.25); }
+.switch input:checked + .track::after{ background:var(--cyan); transform:translateX(16px); box-shadow:0 0 8px var(--cyan); }
+
+.btn-row{ display:flex; gap:8px; margin-top:12px; }
+.btn{
+  flex:1; padding:10px 12px; border-radius:var(--radius-md); font-size:12.5px; font-weight:600;
+  cursor:pointer; border:1px solid var(--line); background:var(--bg-panel-2); color:var(--text-hi);
+  display:flex; align-items:center; justify-content:center; gap:6px; transition:all .15s ease;
+}
+.btn:hover{ border-color:var(--text-low); transform:translateY(-1px); }
+.btn-primary{
+  background:linear-gradient(135deg, var(--cyan), var(--pink)); color:#04121a; border:none;
+  box-shadow:0 8px 20px -10px rgba(53,230,240,0.6);
+}
+
+/* points readout chips */
+.pt-chips{ display:flex; flex-wrap:wrap; gap:8px; }
+.pt-chip{
+  display:flex; align-items:center; gap:7px; font-family:var(--font-mono); font-size:11.5px;
+  color:var(--text-mid); border:1px solid var(--line); background:var(--bg-panel-2);
+  padding:6px 10px; border-radius:999px;
+}
+.pt-chip .sw{ width:8px; height:8px; border-radius:50%; }
+.pt-chip b{ color:var(--text-hi); }
+
+/* math engine */
+.math-panel{ font-family:var(--font-mono); font-size:12.3px; color:var(--text-mid); line-height:1.7; }
+.calc-block{ margin-bottom:14px; }
+.calc-block:last-child{ margin-bottom:0; }
+.calc-title{
+  font-family:var(--font-body); font-size:11.5px; font-weight:600; color:var(--text-hi);
+  text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px; display:flex; align-items:center; gap:7px;
+}
+.calc-title .dot{ width:6px; height:6px; border-radius:50%; }
+.calc-line{ padding:4px 0; word-break:break-word; }
+.calc-line.result{ color:var(--text-hi); font-weight:600; }
+.calc-line.result b{ color:var(--cyan); }
+.calc-note{ font-family:var(--font-body); font-size:11.5px; color:var(--text-low); margin-top:6px; line-height:1.55; }
+
+/* fraction + radical HTML formatting */
+.frac{ display:inline-flex; flex-direction:column; vertical-align:middle; text-align:center; line-height:1.15; margin:0 3px; font-size:0.94em; }
+.frac .num{ border-bottom:1.4px solid currentColor; padding:0 4px 1px; }
+.frac .den{ padding:1px 4px 0; }
+.radical{ display:inline-flex; align-items:flex-start; margin:0 2px; }
+.radical > .sign{ font-size:1.05em; transform:scaleY(1.2) scaleX(0.85); display:inline-block; position:relative; top:-1px; }
+.radical > .content{ border-top:1.4px solid currentColor; padding:0 4px; }
+
+/* ---------- main stage ---------- */
+.stage-card .card-body{ padding:12px; }
+.stage-toolbar{
+  display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:2px 4px 10px;
+}
+.chip{
+  font-family:var(--font-mono); font-size:11px; color:var(--text-mid); border:1px solid var(--line);
+  background:var(--bg-panel-2); padding:6px 10px; border-radius:999px; display:flex; gap:6px; align-items:center;
+}
+.zoom-controls{ display:flex; gap:6px; }
+.zoom-controls button{
+  width:30px; height:30px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel-2);
+  color:var(--text-hi); cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center;
+  transition:all .15s ease;
+}
+.zoom-controls button:hover{ border-color:var(--text-low); color:var(--cyan); }
+
+.scope{
+  position:relative; border-radius:var(--radius-md); overflow:hidden;
+  background:#060810; border:1px solid var(--line); touch-action:none; height:min(78vh, 720px);
+}
+.scope::after{ content:""; position:absolute; inset:0; pointer-events:none; box-shadow:inset 0 0 60px rgba(0,0,0,0.5); }
+#plane{ display:block; width:100%; height:100%; }
+
+.hint-overlay{
+  position:absolute; left:14px; bottom:12px; z-index:5;
+  font-family:var(--font-mono); font-size:10.5px; color:var(--text-low);
+  background:rgba(10,13,22,0.55); border:1px solid var(--line); padding:7px 11px; border-radius:999px;
+  backdrop-filter:blur(6px); pointer-events:none;
+}
+
+.footer-note{ text-align:center; color:var(--text-low); font-size:11px; font-family:var(--font-mono); padding:6px 16px 0; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">xy</div>
+    <div class="brand-text">
+      <b>Coordinate Geometry Lab</b>
+      <span>digital blueprint · cartesian plane engine</span>
+    </div>
+  </div>
+  <a class="back-link" href="../index.html">&larr; Lab Home</a>
+</div>
+
+<div class="layout">
+
+  <!-- ============================ SIDEBAR ============================ -->
+  <aside class="sidebar">
+
+    <div class="card">
+      <div class="card-head"><h2>Mode</h2><span class="eyebrow">Select</span></div>
+      <div class="card-body">
+        <div class="mode-tabs" id="modeTabs">
+          <div class="mode-tab active" data-mode="distance"><span class="t">Distance &amp; Slope</span><span class="s">2 points</span></div>
+          <div class="mode-tab" data-mode="section"><span class="t">Section Formula</span><span class="s">3 points</span></div>
+          <div class="mode-tab" data-mode="midpoint"><span class="t">Midpoint</span><span class="s">special case</span></div>
+          <div class="mode-tab" data-mode="area"><span class="t">Area / Polygon</span><span class="s">3–4 points</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>Canvas Tools</h2><span class="eyebrow">Plane</span></div>
+      <div class="card-body">
+
+        <div class="toggle-line" style="margin-top:0;">
+          <span class="lbl">Snap to grid</span>
+          <label class="switch"><input type="checkbox" id="snapToggle" checked><span class="track"></span></label>
+        </div>
+
+        <!-- section-mode only -->
+        <div class="field" id="ratioField" style="display:none; margin-top:14px;">
+          <div class="field-label"><b>Ratio m : n</b><span class="val" id="ratioVal">1 : 1</span></div>
+          <input type="range" id="ratioSlider" min="0" max="18" step="1" value="9">
+          <div class="tick-row"><span>1:10</span><span>1:1</span><span>10:1</span></div>
+        </div>
+
+        <!-- area-mode only -->
+        <div class="field" id="polyField" style="display:none; margin-top:14px;">
+          <div class="field-label"><b>Shape</b></div>
+          <div class="btn-row" style="margin-top:0;">
+            <button class="btn" id="triBtn">Triangle</button>
+            <button class="btn" id="quadBtn">Quadrilateral</button>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn" id="resetViewBtn">⤾ Reset View</button>
+          <button class="btn" id="resetPtsBtn">↺ Reset Points</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>Points</h2><span class="eyebrow">Live</span></div>
+      <div class="card-body">
+        <div class="pt-chips" id="ptChips"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>Math Engine</h2><span class="eyebrow">Step-by-step</span></div>
+      <div class="card-body">
+        <div class="math-panel" id="mathPanel"><!-- populated by JS --></div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ============================ MAIN STAGE ============================ -->
+  <main>
+    <div class="card stage-card">
+      <div class="card-head">
+        <h2 id="stageTitle">Distance &amp; Slope</h2>
+        <span class="eyebrow">Drag the points</span>
+      </div>
+      <div class="card-body">
+        <div class="stage-toolbar">
+          <div class="chip">Zoom <b id="zoomChip">100%</b></div>
+          <div class="zoom-controls">
+            <button id="zoomOutBtn">&minus;</button>
+            <button id="zoomInBtn">&#43;</button>
+          </div>
+        </div>
+        <div class="scope">
+          <canvas id="plane"></canvas>
+          <div class="hint-overlay">drag points · scroll / pinch to zoom · drag empty space to pan</div>
+        </div>
+      </div>
+    </div>
+    <p class="footer-note">Pure HTML5 Canvas + vanilla JavaScript · no external math or physics libraries</p>
+  </main>
+
+</div>
+
+<script>
+"use strict";
+
+/* ============================================================
+   0) SMALL MATH / FORMAT HELPERS
+   ============================================================ */
+function fmt(n){
+  if(!isFinite(n)) return "0";
+  const r = Math.round(n*100)/100;
+  return (Object.is(r,-0) ? 0 : r).toString();
+}
+function gcd(a,b){ a=Math.abs(Math.round(a)); b=Math.abs(Math.round(b)); while(b){ [a,b]=[b,a%b]; } return a||1; }
+function frac(numHTML, denHTML){
+  return `<span class="frac"><span class="num">${numHTML}</span><span class="den">${denHTML}</span></span>`;
+}
+function radical(innerHTML){
+  return `<span class="radical"><span class="sign">&radic;</span><span class="content">${innerHTML}</span></span>`;
+}
+function signed(n){ return n >= 0 ? `+ ${fmt(Math.abs(n))}` : `&minus; ${fmt(Math.abs(n))}`; }
+
+/* ============================================================
+   1) DOM REFS
+   ============================================================ */
+const canvas = document.getElementById('plane');
+const ctx = canvas.getContext('2d');
+const scope = canvas.parentElement;
+
+const modeTabs = document.getElementById('modeTabs');
+const stageTitle = document.getElementById('stageTitle');
+const snapToggle = document.getElementById('snapToggle');
+const ratioField = document.getElementById('ratioField');
+const ratioSlider = document.getElementById('ratioSlider');
+const ratioVal = document.getElementById('ratioVal');
+const polyField = document.getElementById('polyField');
+const triBtn = document.getElementById('triBtn');
+const quadBtn = document.getElementById('quadBtn');
+const resetViewBtn = document.getElementById('resetViewBtn');
+const resetPtsBtn = document.getElementById('resetPtsBtn');
+const zoomInBtn = document.getElementById('zoomInBtn');
+const zoomOutBtn = document.getElementById('zoomOutBtn');
+const zoomChip = document.getElementById('zoomChip');
+const ptChips = document.getElementById('ptChips');
+const mathPanel = document.getElementById('mathPanel');
+
+/* ============================================================
+   2) STATE
+   ============================================================ */
+const RATIOS = [[1,10],[1,9],[1,8],[1,7],[1,6],[1,5],[1,4],[1,3],[1,2],[1,1],
+                [2,1],[3,1],[4,1],[5,1],[6,1],[7,1],[8,1],[9,1],[10,1]];
+
+const state = {
+  mode: 'distance',
+  snap: true,
+  dpr: Math.min(window.devicePixelRatio || 1, 2),
+  W: 0, H: 0,
+  scale: 42,           // px per unit
+  originX: 0, originY: 0, // screen px location of world (0,0)
+  dragging: null,      // {store, key}
+  panning: false,
+  lastPanX: 0, lastPanY: 0,
+  dirty: true,
+
+  distance: { A:{x:-4,y:-2}, B:{x:3,y:3} },
+  section:  { A:{x:-5,y:-3}, B:{x:5,y:4}, ratioIndex:9 },
+  midpoint: { A:{x:-4,y:3}, B:{x:4,y:-2} },
+  area:     { shape:'quad', pts:[{x:-4,y:-3},{x:3,y:-4},{x:4,y:2},{x:-3,y:3}] },
+};
+
+const activePointers = new Map();
+let pinch = null; // {prevDist, cx, cy}
+
+/* ============================================================
+   3) COORDINATE TRANSFORM
+   ============================================================ */
+function worldToScreen(x,y){ return { x: state.originX + x*state.scale, y: state.originY - y*state.scale }; }
+function screenToWorld(x,y){ return { x: (x - state.originX)/state.scale, y: (state.originY - y)/state.scale }; }
+
+function resetView(){
+  state.scale = 42;
+  state.originX = state.W/2;
+  state.originY = state.H/2;
+  markDirty();
+}
+
+function resizeCanvas(){
+  const rect = scope.getBoundingClientRect();
+  state.W = rect.width; state.H = rect.height;
+  canvas.width = Math.round(state.W * state.dpr);
+  canvas.height = Math.round(state.H * state.dpr);
+  canvas.style.width = state.W+'px'; canvas.style.height = state.H+'px';
+  ctx.setTransform(state.dpr,0,0,state.dpr,0,0);
+  if(state.originX === 0 && state.originY === 0){ resetView(); }
+  markDirty();
+}
+function markDirty(){ state.dirty = true; }
+
+/* ============================================================
+   4) ACTIVE POINT SET PER MODE  (single source of truth for
+      hit-testing, dragging, and rendering)
+   ============================================================ */
+function getActivePoints(){
+  const m = state.mode;
+  if(m === 'distance'){
+    const d = state.distance;
+    return [
+      { key:'A', store:d, p:d.A, color: '--cyan', label:'A', draggable:true },
+      { key:'B', store:d, p:d.B, color: '--pink', label:'B', draggable:true },
+    ];
+  }
+  if(m === 'section'){
+    const s = state.section;
+    const P = sectionPoint(s);
+    return [
+      { key:'A', store:s, p:s.A, color:'--cyan', label:'A', draggable:true },
+      { key:'B', store:s, p:s.B, color:'--pink', label:'B', draggable:true },
+      { key:'P', store:s, p:P, color:'--green', label:'P', draggable:false },
+    ];
+  }
+  if(m === 'midpoint'){
+    const mp = state.midpoint;
+    const P = { x:(mp.A.x+mp.B.x)/2, y:(mp.A.y+mp.B.y)/2 };
+    return [
+      { key:'A', store:mp, p:mp.A, color:'--cyan', label:'A', draggable:true },
+      { key:'B', store:mp, p:mp.B, color:'--pink', label:'B', draggable:true },
+      { key:'P', store:mp, p:P, color:'--green', label:'P', draggable:false },
+    ];
+  }
+  // area
+  const a = state.area;
+  const colors = ['--cyan','--pink','--green','--amber'];
+  const labels = ['A','B','C','D'];
+  return a.pts.map((p,i)=>({ key:'pt'+i, store:a, arrIndex:i, p, color:colors[i], label:labels[i], draggable:true }));
+}
+
+function sectionPoint(s){
+  const [m,n] = RATIOS[s.ratioIndex];
+  return { x:(m*s.B.x + n*s.A.x)/(m+n), y:(m*s.B.y + n*s.A.y)/(m+n) };
+}
+
+function cssVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+/* ============================================================
+   5) POINTER INTERACTION (mouse + touch + pen, unified)
+   ============================================================ */
+canvas.style.touchAction = 'none';
+
+function hitTest(sx, sy){
+  const pts = getActivePoints().filter(o=>o.draggable);
+  let best=null, bestDist=Infinity;
+  for(const o of pts){
+    const sp = worldToScreen(o.p.x, o.p.y);
+    const d = Math.hypot(sp.x-sx, sp.y-sy);
+    if(d < 22 && d < bestDist){ best=o; bestDist=d; }
+  }
+  return best;
+}
+
+function applySnap(p){
+  if(!state.snap) return p;
+  return { x: Math.round(p.x), y: Math.round(p.y) };
+}
+
+canvas.addEventListener('pointerdown', (e)=>{
+  const rect = canvas.getBoundingClientRect();
+  const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
+  canvas.setPointerCapture(e.pointerId);
+  activePointers.set(e.pointerId, {x:sx, y:sy});
+
+  if(activePointers.size === 1){
+    const hit = hitTest(sx, sy);
+    if(hit){
+      state.dragging = hit;
+    } else {
+      state.panning = true;
+      state.lastPanX = sx; state.lastPanY = sy;
+    }
+  } else if(activePointers.size === 2){
+    state.dragging = null; state.panning = false;
+    const pts = Array.from(activePointers.values());
+    const dist = Math.hypot(pts[0].x-pts[1].x, pts[0].y-pts[1].y);
+    pinch = { prevDist: dist };
+  }
+});
+
+canvas.addEventListener('pointermove', (e)=>{
+  const rect = canvas.getBoundingClientRect();
+  const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
+  if(activePointers.has(e.pointerId)) activePointers.set(e.pointerId, {x:sx, y:sy});
+
+  if(activePointers.size >= 2 && pinch){
+    const pts = Array.from(activePointers.values());
+    const midX = (pts[0].x+pts[1].x)/2, midY = (pts[0].y+pts[1].y)/2;
+    const dist = Math.hypot(pts[0].x-pts[1].x, pts[0].y-pts[1].y);
+    const factor = dist / (pinch.prevDist || dist);
+    zoomAt(midX, midY, factor);
+    pinch.prevDist = dist;
+    return;
+  }
+
+  if(state.dragging){
+    const world = applySnap(screenToWorld(sx, sy));
+    const d = state.dragging;
+    if(d.store === state.area){ d.store.pts[d.arrIndex] = world; }
+    else{ d.store[d.key] = world; }
+    markDirty();
+    return;
+  }
+  if(state.panning){
+    state.originX += (sx - state.lastPanX);
+    state.originY += (sy - state.lastPanY);
+    state.lastPanX = sx; state.lastPanY = sy;
+    markDirty();
+    return;
+  }
+
+  // hover cursor feedback
+  const hit = hitTest(sx, sy);
+  canvas.style.cursor = hit ? 'grab' : 'crosshair';
+});
+
+function endPointer(e){
+  activePointers.delete(e.pointerId);
+  if(activePointers.size < 2) pinch = null;
+  if(activePointers.size === 0){
+    state.dragging = null;
+    state.panning = false;
+    canvas.style.cursor = 'crosshair';
+  }
+}
+canvas.addEventListener('pointerup', endPointer);
+canvas.addEventListener('pointercancel', endPointer);
+canvas.addEventListener('pointerleave', (e)=>{ if(activePointers.size===0){ state.panning=false; } });
+
+canvas.addEventListener('wheel', (e)=>{
+  e.preventDefault();
+  const rect = canvas.getBoundingClientRect();
+  const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
+  const factor = e.deltaY < 0 ? 1.08 : 0.926;
+  zoomAt(sx, sy, factor);
+}, { passive:false });
+
+function zoomAt(sx, sy, factor){
+  const before = screenToWorld(sx, sy);
+  state.scale = Math.max(10, Math.min(220, state.scale * factor));
+  const afterScreen = worldToScreen(before.x, before.y);
+  state.originX += sx - afterScreen.x;
+  state.originY += sy - afterScreen.y;
+  zoomChip.textContent = Math.round((state.scale/42)*100) + '%';
+  markDirty();
+}
+
+zoomInBtn.addEventListener('click', ()=> zoomAt(state.W/2, state.H/2, 1.2));
+zoomOutBtn.addEventListener('click', ()=> zoomAt(state.W/2, state.H/2, 0.833));
+resetViewBtn.addEventListener('click', ()=>{ resetView(); zoomChip.textContent='100%'; });
+
+resetPtsBtn.addEventListener('click', ()=>{
+  state.distance = { A:{x:-4,y:-2}, B:{x:3,y:3} };
+  state.section  = { A:{x:-5,y:-3}, B:{x:5,y:4}, ratioIndex:9 };
+  state.midpoint = { A:{x:-4,y:3}, B:{x:4,y:-2} };
+  state.area     = { shape: state.area.shape, pts: state.area.shape==='tri'
+                      ? [{x:-4,y:-3},{x:4,y:-3},{x:0,y:4}]
+                      : [{x:-4,y:-3},{x:3,y:-4},{x:4,y:2},{x:-3,y:3}] };
+  ratioSlider.value = 9;
+  markDirty();
+});
+
+snapToggle.addEventListener('change', ()=>{ state.snap = snapToggle.checked; });
+
+ratioSlider.addEventListener('input', ()=>{
+  state.section.ratioIndex = parseInt(ratioSlider.value,10);
+  const [m,n] = RATIOS[state.section.ratioIndex];
+  ratioVal.textContent = `${m} : ${n}`;
+  markDirty();
+});
+
+triBtn.addEventListener('click', ()=>{
+  state.area.shape = 'tri';
+  state.area.pts = state.area.pts.slice(0,3);
+  if(state.area.pts.length < 3) state.area.pts = [{x:-4,y:-3},{x:4,y:-3},{x:0,y:4}];
+  markDirty();
+});
+quadBtn.addEventListener('click', ()=>{
+  state.area.shape = 'quad';
+  if(state.area.pts.length < 4) state.area.pts.push({x:-3,y:3});
+  markDirty();
+});
+
+modeTabs.addEventListener('click', (e)=>{
+  const tab = e.target.closest('.mode-tab');
+  if(!tab) return;
+  modeTabs.querySelectorAll('.mode-tab').forEach(t=>t.classList.remove('active'));
+  tab.classList.add('active');
+  state.mode = tab.dataset.mode;
+  ratioField.style.display = (state.mode === 'section') ? 'block' : 'none';
+  polyField.style.display = (state.mode === 'area') ? 'block' : 'none';
+  const titles = { distance:'Distance &amp; Slope', section:'Section Formula', midpoint:'Midpoint Formula', area:'Area of Polygon' };
+  stageTitle.innerHTML = titles[state.mode];
+  markDirty();
+});
+
+window.addEventListener('resize', ()=>{
+  clearTimeout(window.__rt);
+  window.__rt = setTimeout(resizeCanvas, 100);
+});
+
+/* ============================================================
+   6) RENDER — GRID
+   ============================================================ */
+function niceStep(raw){
+  const pow = Math.pow(10, Math.floor(Math.log10(raw)));
+  const f = raw/pow;
+  let n;
+  if(f < 1.5) n = 1; else if(f < 3.5) n = 2; else if(f < 7.5) n = 5; else n = 10;
+  return n*pow;
+}
+
+function drawGrid(){
+  const topLeft = screenToWorld(0,0);
+  const botRight = screenToWorld(state.W, state.H);
+  const targetPx = 64;
+  const step = niceStep(targetPx / state.scale);
+
+  ctx.lineWidth = 1;
+  const startX = Math.floor(topLeft.x/step)*step;
+  const endX = Math.ceil(botRight.x/step)*step;
+  const startY = Math.floor(botRight.y/step)*step;
+  const endY = Math.ceil(topLeft.y/step)*step;
+
+  ctx.font = '10.5px "JetBrains Mono", monospace';
+  for(let x = startX; x <= endX; x += step){
+    const sx = worldToScreen(x,0).x;
+    ctx.strokeStyle = Math.abs(x) < 1e-6 ? 'rgba(53,230,240,0.55)' : 'rgba(148,163,196,0.12)';
+    ctx.beginPath(); ctx.moveTo(sx, 0); ctx.lineTo(sx, state.H); ctx.stroke();
+    if(Math.abs(x) > 1e-6){
+      ctx.fillStyle = 'rgba(148,163,196,0.55)';
+      ctx.fillText(fmt(x), sx+3, state.originY + 13);
+    }
+  }
+  for(let y = startY; y <= endY; y += step){
+    const sy = worldToScreen(0,y).y;
+    ctx.strokeStyle = Math.abs(y) < 1e-6 ? 'rgba(255,63,164,0.5)' : 'rgba(148,163,196,0.12)';
+    ctx.beginPath(); ctx.moveTo(0, sy); ctx.lineTo(state.W, sy); ctx.stroke();
+    if(Math.abs(y) > 1e-6){
+      ctx.fillStyle = 'rgba(148,163,196,0.55)';
+      ctx.fillText(fmt(y), state.originX+4, sy-3);
+    }
+  }
+  // axis labels
+  ctx.fillStyle = 'rgba(234,240,251,0.7)';
+  ctx.font = '600 11px "JetBrains Mono", monospace';
+  ctx.fillText('x', state.W-16, state.originY-8);
+  ctx.fillText('y', state.originX+8, 14);
+  ctx.fillText('O', state.originX+5, state.originY+14);
+}
+
+/* ============================================================
+   7) RENDER — POINTS & LABELS
+   ============================================================ */
+function drawSegment(p1, p2, color, width, dash){
+  const a = worldToScreen(p1.x,p1.y), b = worldToScreen(p2.x,p2.y);
+  ctx.save();
+  ctx.setLineDash(dash || []);
+  ctx.strokeStyle = color; ctx.lineWidth = width || 2;
+  ctx.shadowColor = color; ctx.shadowBlur = dash ? 0 : 8;
+  ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+  ctx.restore();
+}
+
+function drawPoint(o){
+  const sp = worldToScreen(o.p.x, o.p.y);
+  const color = cssVar(o.color) || '#35e6f0';
+  const r = 7;
+
+  const grad = ctx.createRadialGradient(sp.x, sp.y, 0, sp.x, sp.y, r*3.2);
+  grad.addColorStop(0, color+'aa'); grad.addColorStop(1, color+'00');
+  ctx.fillStyle = grad;
+  ctx.beginPath(); ctx.arc(sp.x, sp.y, r*3.2, 0, Math.PI*2); ctx.fill();
+
+  ctx.beginPath(); ctx.arc(sp.x, sp.y, r, 0, Math.PI*2);
+  ctx.fillStyle = color; ctx.fill();
+  ctx.lineWidth = 2; ctx.strokeStyle = '#04121a'; ctx.stroke();
+
+  ctx.font = '600 12.5px "Space Grotesk", sans-serif';
+  ctx.fillStyle = color;
+  ctx.fillText(o.label, sp.x + 12, sp.y - 12);
+
+  const isDragging = state.dragging && state.dragging.key === o.key &&
+    (state.dragging.arrIndex === o.arrIndex || (state.dragging.arrIndex===undefined && o.arrIndex===undefined));
+  if(isDragging){
+    const txt = `(${fmt(o.p.x)}, ${fmt(o.p.y)})`;
+    ctx.font = '600 11.5px "JetBrains Mono", monospace';
+    const tw = ctx.measureText(txt).width;
+    const px = sp.x+14, py = sp.y-30;
+    ctx.fillStyle = 'rgba(6,8,16,0.85)';
+    roundRect(px-6, py-15, tw+12, 22, 6); ctx.fill();
+    ctx.strokeStyle = color; ctx.lineWidth=1; roundRect(px-6, py-15, tw+12, 22, 6); ctx.stroke();
+    ctx.fillStyle = '#eaf0fb';
+    ctx.fillText(txt, px, py+1);
+  }
+}
+function roundRect(x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+}
+
+function drawTick(mid, dirX, dirY, color){
+  const sp = worldToScreen(mid.x, mid.y);
+  const len = 7;
+  ctx.strokeStyle = color; ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(sp.x - dirX*len, sp.y - dirY*len);
+  ctx.lineTo(sp.x + dirX*len, sp.y + dirY*len);
+  ctx.stroke();
+}
+
+function drawModeShapes(){
+  const cyan = cssVar('--cyan'), pink = cssVar('--pink'), green = cssVar('--green'), amber = cssVar('--amber');
+
+  if(state.mode === 'distance'){
+    const { A, B } = state.distance;
+    const corner = { x:B.x, y:A.y };
+    drawSegment(A, corner, 'rgba(255,196,92,0.85)', 1.6, [6,5]);
+    drawSegment(corner, B, 'rgba(255,196,92,0.85)', 1.6, [6,5]);
+    drawSegment(A, B, cyan, 2.6);
+    [{key:'A',p:A,color:cyan,label:'A'},{key:'B',p:B,color:pink,label:'B'}].forEach(o=>drawPoint(o));
+    // labels for dx/dy
+    const midDx = worldToScreen((A.x+B.x)/2, A.y);
+    ctx.font = '600 11px "JetBrains Mono", monospace';
+    ctx.fillStyle = amber;
+    ctx.fillText('Δx = '+fmt(B.x-A.x), midDx.x-14, midDx.y+16);
+    const midDy = worldToScreen(B.x, (A.y+B.y)/2);
+    ctx.fillText('Δy = '+fmt(B.y-A.y), midDy.x+8, midDy.y);
+  }
+
+  else if(state.mode === 'section' || state.mode === 'midpoint'){
+    const s = state.mode === 'section' ? state.section : state.midpoint;
+    const A = s.A, B = s.B;
+    const P = state.mode === 'section' ? sectionPoint(s) : { x:(A.x+B.x)/2, y:(A.y+B.y)/2 };
+    drawSegment(A, P, cyan, 2.4);
+    drawSegment(P, B, pink, 2.4);
+    drawPoint({p:A,color:cyan,label:'A'});
+    drawPoint({p:B,color:pink,label:'B'});
+    drawPoint({p:P,color:green,label:'P'});
+
+    if(state.mode === 'midpoint'){
+      const dx = B.x-A.x, dy = B.y-A.y;
+      const len = Math.hypot(dx,dy) || 1;
+      const nx = -dy/len, ny = dx/len;
+      drawTick({x:(A.x+P.x)/2, y:(A.y+P.y)/2}, nx, ny, green);
+      drawTick({x:(P.x+B.x)/2, y:(P.y+B.y)/2}, nx, ny, green);
+    }
+
+    const apMid = worldToScreen((A.x+P.x)/2, (A.y+P.y)/2);
+    const pbMid = worldToScreen((P.x+B.x)/2, (P.y+B.y)/2);
+    ctx.font = '600 11px "JetBrains Mono", monospace';
+    ctx.fillStyle = cyan;
+    ctx.fillText('AP = '+fmt(Math.hypot(P.x-A.x,P.y-A.y)), apMid.x+8, apMid.y-8);
+    ctx.fillStyle = pink;
+    ctx.fillText('PB = '+fmt(Math.hypot(B.x-P.x,B.y-P.y)), pbMid.x+8, pbMid.y-8);
+  }
+
+  else if(state.mode === 'area'){
+    const pts = state.area.pts;
+    ctx.beginPath();
+    pts.forEach((p,i)=>{
+      const sp = worldToScreen(p.x,p.y);
+      if(i===0) ctx.moveTo(sp.x,sp.y); else ctx.lineTo(sp.x,sp.y);
+    });
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(61,255,160,0.14)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(61,255,160,0.85)';
+    ctx.lineWidth = 2.4; ctx.shadowColor='rgba(61,255,160,0.6)'; ctx.shadowBlur=10;
+    ctx.stroke(); ctx.shadowBlur = 0;
+
+    const colors = [cyan,pink,green,amber];
+    const labels = ['A','B','C','D'];
+    pts.forEach((p,i)=> drawPoint({p, color:colors[i], label:labels[i]}));
+  }
+}
+
+/* ============================================================
+   8) MATH ENGINE — SIDEBAR PANEL PER MODE
+   ============================================================ */
+function renderMathPanel(){
+  if(state.mode === 'distance') return renderDistanceMath();
+  if(state.mode === 'section') return renderSectionMath();
+  if(state.mode === 'midpoint') return renderMidpointMath();
+  if(state.mode === 'area') return renderAreaMath();
+}
+
+function renderDistanceMath(){
+  const { A, B } = state.distance;
+  const dx = B.x-A.x, dy = B.y-A.y;
+  const distSq = dx*dx+dy*dy;
+  const dist = Math.sqrt(distSq);
+  const vertical = Math.abs(dx) < 1e-9;
+  const m = vertical ? null : dy/dx;
+  const c = vertical ? null : A.y - m*A.x;
+
+  let html = '';
+  html += `<div class="calc-block">
+    <div class="calc-title"><span class="dot" style="background:var(--cyan)"></span>Distance formula</div>
+    <div class="calc-line">d = ${radical('(x₂&minus;x₁)² + (y₂&minus;y₁)²')}</div>
+    <div class="calc-line">d = ${radical(`(${fmt(dx)})² + (${fmt(dy)})²`)}</div>
+    <div class="calc-line">d = ${radical(fmt(dx*dx)+' + '+fmt(dy*dy))}</div>
+    <div class="calc-line result">d = <b>${fmt(dist)}</b> units</div>
+  </div>`;
+
+  html += `<div class="calc-block">
+    <div class="calc-title"><span class="dot" style="background:var(--pink)"></span>Slope (m)</div>
+    <div class="calc-line">m = ${frac('y₂ &minus; y₁','x₂ &minus; x₁')}</div>
+    <div class="calc-line">m = ${frac(fmt(dy), fmt(dx))}</div>
+    <div class="calc-line result">m = <b>${vertical ? 'undefined (vertical line)' : fmt(m)}</b></div>
+  </div>`;
+
+  html += `<div class="calc-block">
+    <div class="calc-title"><span class="dot" style="background:var(--amber)"></span>Line equation</div>`;
+  if(vertical){
+    html += `<div class="calc-line">Vertical line ⇒ x is constant</div>
+      <div class="calc-line result">x = <b>${fmt(A.x)}</b></div>`;
+  } else {
+    html += `<div class="calc-line">y &minus; y₁ = m(x &minus; x₁)</div>
+      <div class="calc-line">y ${signed(-A.y)} = ${fmt(m)}(x ${signed(-A.x)})</div>
+      <div class="calc-line result">y = <b>${fmt(m)}x ${c>=0?'+ '+fmt(c):'&minus; '+fmt(Math.abs(c))}</b></div>`;
+  }
+  html += `</div>
+  <div class="calc-note">A(${fmt(A.x)}, ${fmt(A.y)}) and B(${fmt(B.x)}, ${fmt(B.y)}) — drag either point on the plane to see every value update live.</div>`;
+
+  mathPanel.innerHTML = html;
+}
+
+function renderSectionMath(){
+  const s = state.section;
+  const [m,n] = RATIOS[s.ratioIndex];
+  const { A, B } = s;
+  const P = sectionPoint(s);
+  const px_num = m*B.x + n*A.x, py_num = m*B.y + n*A.y, denom = m+n;
+  const AP = Math.hypot(P.x-A.x, P.y-A.y);
+  const PB = Math.hypot(B.x-P.x, B.y-P.y);
+  const g = gcd(Math.round(AP*100), Math.round(PB*100));
+
+  let html = '';
+  html += `<div class="calc-block">
+    <div class="calc-title"><span class="dot" style="background:var(--green)"></span>Section formula</div>
+    <div class="calc-line">P divides AB in ratio m : n = ${m} : ${n}</div>
+    <div class="calc-line">P(x, y) = ${frac('mx₂ + nx₁','m + n')}, ${frac('my₂ + ny₁','m + n')}</div>
+    <div class="calc-line">Pₓ = ${frac(`${m}(${fmt(B.x)}) + ${n}(${fmt(A.x)})`, `${m} + ${n}`)} = ${frac(fmt(px_num), fmt(denom))}</div>
+    <div class="calc-line result">Pₓ = <b>${fmt(P.x)}</b></div>
+    <div class="calc-line">Pᵧ = ${frac(`${m}(${fmt(B.y)}) + ${n}(${fmt(A.y)})`, `${m} + ${n}`)} = ${frac(fmt(py_num), fmt(denom))}</div>
+    <div class="calc-line result">Pᵧ = <b>${fmt(P.y)}</b></div>
+  </div>`;
+
+  html += `<div class="calc-block">
+    <div class="calc-title"><span class="dot" style="background:var(--cyan)"></span>Verify the ratio</div>
+    <div class="calc-line">AP = ${fmt(AP)}, &nbsp; PB = ${fmt(PB)}</div>
+    <div class="calc-line result">AP : PB ≈ <b>${Math.round(AP/g)} : ${Math.round(PB/g)}</b> (target ${m}:${n})</div>
+  </div>
+  <div class="calc-note">A(${fmt(A.x)}, ${fmt(A.y)}), B(${fmt(B.x)}, ${fmt(B.y)}) — move the ratio slider to slide P along AB.</div>`;
+
+  mathPanel.innerHTML = html;
+}
+
+function renderMidpointMath(){
+  const { A, B } = state.midpoint;
+  const Px = (A.x+B.x)/2, Py = (A.y+B.y)/2;
+  const AP = Math.hypot(Px-A.x, Py-A.y);
+  const PB = Math.hypot(B.x-Px, B.y-Py);
+
+  let html = '';
+  html += `<div class="calc-block">
+    <div class="calc-title"><span class="dot" style="background:var(--green)"></span>Midpoint formula</div>
+    <div class="calc-line">P(x, y) = ${frac('x₁ + x₂','2')}, ${frac('y₁ + y₂','2')}</div>
+    <div class="calc-line">Pₓ = ${frac(`${fmt(A.x)} + ${fmt(B.x)}`,'2')} = ${frac(fmt(A.x+B.x),'2')}</div>
+    <div class="calc-line result">Pₓ = <b>${fmt(Px)}</b></div>
+    <div class="calc-line">Pᵧ = ${frac(`${fmt(A.y)} + ${fmt(B.y)}`,'2')} = ${frac(fmt(A.y+B.y),'2')}</div>
+    <div class="calc-line result">Pᵧ = <b>${fmt(Py)}</b></div>
+  </div>`;
+
+  html += `<div class="calc-block">
+    <div class="calc-title"><span class="dot" style="background:var(--cyan)"></span>Equal segments</div>
+    <div class="calc-line">AP = ${fmt(AP)} &nbsp;·&nbsp; PB = ${fmt(PB)}</div>
+    <div class="calc-line result">AP = PB ⇒ <b>P is the exact midpoint</b></div>
+  </div>
+  <div class="calc-note">The midpoint is simply the section formula with m : n = 1 : 1 — the average of the coordinates.</div>`;
+
+  mathPanel.innerHTML = html;
+}
+
+function renderAreaMath(){
+  const pts = state.area.pts;
+  const n = pts.length;
+  let sum = 0;
+  const terms = [];
+  for(let i=0;i<n;i++){
+    const p1 = pts[i], p2 = pts[(i+1)%n];
+    const term = p1.x*p2.y - p2.x*p1.y;
+    sum += term;
+    terms.push({ i1:i+1, i2:(i+1)%n+1, p1, p2, term });
+  }
+  const area = Math.abs(sum)/2;
+
+  let html = `<div class="calc-block">
+    <div class="calc-title"><span class="dot" style="background:var(--green)"></span>Shoelace formula</div>
+    <div class="calc-line">Area = ${frac('1','2')} |Σ(xᵢyᵢ₊₁ &minus; xᵢ₊₁yᵢ)|</div>`;
+  terms.forEach(t=>{
+    html += `<div class="calc-line">(${fmt(t.p1.x)}×${fmt(t.p2.y)}) &minus; (${fmt(t.p2.x)}×${fmt(t.p1.y)}) = ${fmt(t.term)}</div>`;
+  });
+  html += `<div class="calc-line">Σ = ${fmt(sum)}</div>
+    <div class="calc-line result">Area = ${frac('1','2')}|${fmt(sum)}| = <b>${fmt(area)} sq. units</b></div>
+  </div>
+  <div class="calc-note">${n===3?'Triangle':'Quadrilateral'} with vertices ${pts.map((p,i)=>String.fromCharCode(65+i)+`(${fmt(p.x)}, ${fmt(p.y)})`).join(', ')}.</div>`;
+
+  mathPanel.innerHTML = html;
+}
+
+/* ============================================================
+   9) POINT CHIPS
+   ============================================================ */
+function renderChips(){
+  const active = getActivePoints();
+  ptChips.innerHTML = active.map(o=>{
+    const color = cssVar(o.color) || '#35e6f0';
+    return `<span class="pt-chip"><span class="sw" style="background:${color}"></span>${o.label} <b>(${fmt(o.p.x)}, ${fmt(o.p.y)})</b></span>`;
+  }).join('');
+}
+
+/* ============================================================
+   10) MAIN LOOP
+   ============================================================ */
+function frame(){
+  if(state.dirty){
+    ctx.clearRect(0,0,state.W,state.H);
+    drawGrid();
+    drawModeShapes();
+    renderMathPanel();
+    renderChips();
+    state.dirty = false;
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ============================================================
+   11) BOOT
+   ============================================================ */
+resizeCanvas();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
