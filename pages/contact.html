@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/styles.css">
+<link rel="stylesheet" href="../components/bg-slider.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -26,9 +27,19 @@
 <div id="site-header-root"></div>
 
 <main>
-  <section class="page-hero" style="padding-bottom:0;">
-    <div class="wrap">
-      <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><span>Contact</span></div>
+  <section class="page-hero band-dark" style="padding-bottom:0; position:relative; overflow:hidden;">
+    <!-- Reusable background slider — same component used on home page / MathLab -->
+    <div class="bg-slider">
+      <div class="bg-slide" style="background-image:url('https://res.cloudinary.com/vosr6w5p/image/upload/v1789806152/file_0000000089708211889a161da6d88434.png');"></div>
+      <div class="bg-slide" style="background-image:url('https://res.cloudinary.com/vosr6w5p/image/upload/v1789806158/file_00000000c2d88207b08227cef548fbcf.png');"></div>
+      <div class="bg-slide" style="background-image:url('https://res.cloudinary.com/vosr6w5p/image/upload/v1789806168/file_00000000aa6c8211afebdb544ad0a6c8.png');"></div>
+      <div class="bg-slide" style="background-image:url('https://res.cloudinary.com/vosr6w5p/image/upload/v1789806179/file_0000000055f4820686094add8482aeb0.png');"></div>
+      <div class="bg-slide" style="background-image:url('https://res.cloudinary.com/vosr6w5p/image/upload/v1789806180/file_00000000b2c88209b6471ae45387bb94.png');"></div>
+      <div class="bg-slider-overlay"></div>
+    </div>
+
+    <div class="wrap" style="position:relative; z-index:1;">
+      <div class="breadcrumb" style="color:var(--muted-dark);"><a href="../index.html" style="color:var(--muted-dark);">Home</a><span>/</span><span>Contact</span></div>
       <span class="eyebrow"><span class="dot"></span> Get in touch</span>
       <h1 class="section-title" style="margin-top:14px; max-width:600px;">Let's talk about your school</h1>
       <p class="section-sub">Reach us directly, or send a quick inquiry and we'll set up a walkthrough.</p>
@@ -36,16 +47,16 @@
   </section>
 
   <section class="band">
-    <div class="wrap" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:28px;">
+    <div class="wrap contact-cards-grid" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:28px;">
       <div class="card" style="padding:24px;">
         <div class="icon-badge" style="--accent:var(--orange); margin-bottom:14px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 1118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-        <h3 style="font-size:15px; margin-bottom:8px;">Registered office</h3>
-        <p style="font-size:13.8px; color:var(--muted);">R 35, Regional College, Pushkar Road, Ajmer, Rajasthan, 305004</p>
+        <h3 style="font-size:15px; margin-bottom:8px;">Office</h3>
+        <p style="font-size:13.8px; color:var(--muted);">C-177, HBU Nagar, Kotra,<br>near Pushkar Road,<br>Ajmer, Rajasthan – 305001</p>
       </div>
       <div class="card" style="padding:24px;">
         <div class="icon-badge" style="--accent:var(--blue); margin-bottom:14px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
         <h3 style="font-size:15px; margin-bottom:8px;">Phone &amp; email</h3>
-        <p style="font-size:13.8px; color:var(--muted);">+91 97848 49176<br>support@schooloffice.tech</p>
+        <p style="font-size:13.8px; color:var(--muted);">+91 8000292860<br>support@schooloffice.tech</p>
       </div>
       <div class="card" style="padding:24px;">
         <div class="icon-badge" style="--accent:var(--green); margin-bottom:14px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
