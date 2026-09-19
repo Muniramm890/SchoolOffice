@@ -22,11 +22,11 @@
 </script>
 <style>
   .guide-layout { display: grid; grid-template-columns: 240px 1fr; gap: 40px; align-items: flex-start; }
-  .guide-toc { position: sticky; top: 90px; border: 1px solid var(--line); border-radius: 14px; padding: 18px; background: var(--surface); max-height: calc(100vh - 120px); overflow-y: auto; }
-  .guide-toc-group { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); font-weight: 700; margin: 16px 0 6px; }
+  .guide-toc { position: sticky; top: 90px; border: 1px solid var(--line-dark); border-radius: 14px; padding: 18px; background: var(--navy-900); max-height: calc(100vh - 120px); overflow-y: auto; }
+  .guide-toc-group { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted-dark); font-weight: 700; margin: 16px 0 6px; }
   .guide-toc-group:first-child { margin-top: 0; }
-  .guide-toc a { display: block; padding: 6px 8px; border-radius: 8px; font-size: 13.5px; color: var(--ink); text-decoration: none; }
-  .guide-toc a:hover { background: var(--bg); color: var(--orange); }
+  .guide-toc a { display: block; padding: 6px 8px; border-radius: 8px; font-size: 13.5px; color: #EAF0FF; text-decoration: none; }
+  .guide-toc a:hover { background: rgba(255,255,255,.06); color: var(--orange); }
   .guide-section { padding-bottom: 48px; margin-bottom: 48px; border-bottom: 1px solid var(--line); scroll-margin-top: 90px; }
   .guide-section:last-child { border-bottom: none; }
   .guide-section h2 { font-size: 22px; margin-bottom: 6px; }
@@ -47,9 +47,9 @@
 <div id="site-header-root"></div>
 
 <main>
-  <section class="page-hero" style="padding-bottom:0;">
+   <section class="page-hero band-dark" style="padding-bottom:0;">
     <div class="wrap">
-      <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><span>How to Use</span></div>
+      <div class="breadcrumb" style="color:var(--muted-dark);"><a href="../index.html" style="color:var(--muted-dark);">Home</a><span>/</span><span>How to Use</span></div>
       <span class="eyebrow"><span class="dot"></span> Complete user guide</span>
       <h1 class="section-title" style="margin-top:14px; max-width:640px;">How to use School Office</h1>
       <p class="section-sub">Every module, every tab — from creating your account to running your school day-to-day. Bookmark this page for your staff.</p>
