@@ -50,8 +50,6 @@
   20%{ opacity:0; }
 }
 
-<div class="wrap" style="position:relative; z-index:1;">
-
 /* Uniform dark scrim so text placed on top stays readable
    no matter which photo is showing underneath — photos read
    as a subtle, living texture rather than a competing image. */
@@ -66,8 +64,6 @@
   .bg-slide:not(:first-child){ display:none; }
 }
 
-
-
 /* ------------------------------------------------------------
    Adjust for N images (only if you ever use a count other
    than 5): total loop duration = N x 3.5s. Each slide's
@@ -76,3 +72,56 @@
    with delays 0s, -3.5s, -7s — and update keyframe percentages
    proportionally (3%/17%/20% become roughly 5%/28%/33%).
    ------------------------------------------------------------ */
+
+
+/* ============================================================
+   .hero-slider-band — OPTIONAL helper class.
+   ------------------------------------------------------------
+   Add this class alongside a full-width hero section that uses
+   bg-slider as its entire background (not split into columns) —
+   e.g. <section class="page-hero band-dark hero-slider-band">.
+
+   It ONLY does two things:
+   1. Gives the section a comfortable, responsive minimum height
+      so images aren't cropped too tightly.
+   2. Vertically centers whatever content sits inside — text
+      stays at its natural LEFT position (this never touches
+      text-align or horizontal placement), just centered top-
+      to-bottom instead of stuck at the very top or bottom.
+
+   IMPORTANT — scope: every rule below is written as
+   ".hero-slider-band ..." or ".hero-slider-band.wrap", so NONE
+   of this affects any page that doesn't use this exact class.
+   The home page's hero (which splits into a text column + a
+   separate bg-slider column, and does NOT use this class) is
+   completely unaffected by anything in this section.
+
+   Change the min-height numbers below once, here, and every
+   page using .hero-slider-band (About, Contact, Blog, etc.)
+   updates together.
+   ============================================================ */
+.hero-slider-band{
+  min-height:500px;
+  display:flex;
+  align-items:center;       /* vertical centering */
+  justify-content:flex-start; /* explicit: keep content left, never center horizontally */
+}
+
+/* Neutralise .wrap's own left/right auto-margin ONLY inside
+   this class, so flex's horizontal (main-axis) placement isn't
+   overridden by .wrap trying to center itself. Nothing else
+   about .wrap changes — no max-width, no text-align. */
+.hero-slider-band .wrap{
+  margin-left:0;
+  margin-right:0;
+}
+
+/* Responsive height — shorter band on smaller screens so the
+   image and content never feel like they're floating in an
+   oversized empty box on phones/tablets. */
+@media (max-width:900px){
+  .hero-slider-band{ min-height:460px; }
+}
+@media (max-width:600px){
+  .hero-slider-band{ min-height:380px; }
+}
