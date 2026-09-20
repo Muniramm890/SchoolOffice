@@ -50,9 +50,7 @@
   20%{ opacity:0; }
 }
 
-.hero-slider-band{
-  min-height:500px;
-}
+<div class="wrap" style="position:relative; z-index:1;">
 
 /* Uniform dark scrim so text placed on top stays readable
    no matter which photo is showing underneath — photos read
