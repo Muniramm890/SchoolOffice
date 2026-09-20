@@ -50,6 +50,17 @@
   20%{ opacity:0; }
 }
 
+.hero-slider-band{
+  min-height:500px;
+  display:grid;
+  align-items:center;
+  justify-items:start;
+}
+.hero-slider-band .wrap{
+  text-align:left;
+  width:100%;
+}
+
 /* Uniform dark scrim so text placed on top stays readable
    no matter which photo is showing underneath — photos read
    as a subtle, living texture rather than a competing image. */
@@ -64,11 +75,7 @@
   .bg-slide:not(:first-child){ display:none; }
 }
 
-.hero-slider-band{
-  min-height:500px;
-  display:grid;
-  align-items:center;
-}
+
 
 /* ------------------------------------------------------------
    Adjust for N images (only if you ever use a count other
