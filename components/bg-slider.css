@@ -64,6 +64,12 @@
   .bg-slide:not(:first-child){ display:none; }
 }
 
+.hero-slider-band{
+  min-height:440px;
+  display:flex;
+  align-items:center;
+}
+
 /* ------------------------------------------------------------
    Adjust for N images (only if you ever use a count other
    than 5): total loop duration = N x 3.5s. Each slide's
