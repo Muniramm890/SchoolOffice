@@ -65,8 +65,8 @@
 }
 
 .hero-slider-band{
-  min-height:440px;
-  display:flex;
+  min-height:600px;
+  display:grid;
   align-items:center;
 }
 
