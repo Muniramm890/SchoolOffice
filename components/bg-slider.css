@@ -52,13 +52,6 @@
 
 .hero-slider-band{
   min-height:500px;
-  display:grid;
-  align-items:center;
-  justify-items:start;
-}
-.hero-slider-band .wrap{
-  text-align:left;
-  width:100%;
 }
 
 /* Uniform dark scrim so text placed on top stays readable
