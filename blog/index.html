@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>School Office Blog — Practical Ideas for School Administration in India</title>
+<meta name="description" content="Straightforward guides on school attendance, fee collection, exams and admin — written for principals, administrators and teachers running schools in India.">
+<link rel="canonical" href="https://schooloffice.tech/blog/index.html">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="School Office">
+<meta property="og:title" content="School Office Blog — Practical Ideas for School Administration">
+<meta property="og:description" content="Guides on attendance, fees, exams and admin, written for school administrators in India.">
+<meta property="og:url" content="https://schooloffice.tech/blog/index.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+<link rel="stylesheet" href="../components/bg-slider.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "School Office Blog",
+  "url": "https://schooloffice.tech/blog/index.html",
+  "publisher": {
+    "@type": "Organization",
+    "name": "School Office",
+    "url": "https://schooloffice.tech/"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://schooloffice.tech/"},
+    {"@type":"ListItem","position":2,"name":"Blog","item":"https://schooloffice.tech/blog/index.html"}
+  ]
+}
+</script>
+
+<style>
+  /* ---------- blog-specific styles only; tokens/.card/.btn etc. from shared styles.css ---------- */
+  .blog-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:26px;
+  }
+  @media (max-width:900px){ .blog-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:600px){ .blog-grid{ grid-template-columns:1fr; } }
+
+  .post-card{ overflow:hidden; padding:0; display:flex; flex-direction:column; }
+  .post-card-thumb{
+    width:100%; aspect-ratio:16/9; background:var(--bg-alt);
+    display:flex; align-items:center; justify-content:center; color:var(--muted);
+    overflow:hidden;
+  }
+  .post-card-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .post-card-body{ padding:20px; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .post-card-tag{
+    align-self:flex-start; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.4px;
+    color:var(--orange); background:var(--orange-soft); border:1px solid rgba(232,96,10,.25);
+    padding:4px 10px; border-radius:999px;
+  }
+  .post-card-title{ font-size:16.5px; line-height:1.4; margin:0; }
+  .post-card-excerpt{ font-size:13.5px; color:var(--muted); line-height:1.6; flex:1; }
+  .post-card-meta{ font-size:12px; color:var(--muted); display:flex; gap:10px; align-items:center; margin-top:auto; padding-top:6px; }
+  .post-card-link{ font-size:13px; font-weight:700; color:var(--orange); display:inline-flex; align-items:center; gap:6px; margin-top:4px; }
+  .post-card-link svg{ width:13px; height:13px; transition:transform .2s ease; }
+  .post-card:hover .post-card-link svg{ transform:translateX(3px); }
+
+  /* Ad-slot placeholders — scoped to /blog/ only. Replace the
+     placeholder <div> below with the real Google AdSense <ins>
+     tag + script once the account is approved. Do not copy this
+     block into any non-blog page. */
+  .ad-slot{
+    max-width:1160px; margin:36px auto; padding:0 24px;
+  }
+  .ad-slot-inner{
+    border:1px dashed var(--line); border-radius:12px; background:var(--bg-alt);
+    padding:18px; text-align:center; font-size:11.5px; color:var(--muted);
+    text-transform:uppercase; letter-spacing:.06em;
+  }
+</style>
+</head>
+<body data-base="../" data-page="blog">
+
+<div id="site-header-root"></div>
+
+<main>
+  <!-- ============ HERO (dark band, image slider background) ============ -->
+  <section class="band-dark hero-slider-band" style="position:relative; overflow:hidden;">
+    <div class="bg-slider">
+      <div class="bg-slide" style="background-image:url('PLACEHOLDER_BLOG_IMAGE_1');"></div>
+      <div class="bg-slide" style="background-image:url('PLACEHOLDER_BLOG_IMAGE_2');"></div>
+      <div class="bg-slide" style="background-image:url('PLACEHOLDER_BLOG_IMAGE_3');"></div>
+      <div class="bg-slide" style="background-image:url('PLACEHOLDER_BLOG_IMAGE_4');"></div>
+      <div class="bg-slide" style="background-image:url('PLACEHOLDER_BLOG_IMAGE_5');"></div>
+      <div class="bg-slider-overlay"></div>
+    </div>
+
+    <div class="wrap" style="position:relative; z-index:1; max-width:720px;">
+      <div class="breadcrumb" style="color:var(--muted-dark);"><a href="../index.html" style="color:var(--muted-dark);">Home</a><span>/</span><span>Blog</span></div>
+      <span class="eyebrow"><span class="dot"></span> School Office Blog</span>
+      <h1 class="section-title" style="margin-top:14px; max-width:none; color:#F7F9FF;">Practical ideas for running a smarter school office</h1>
+      <p class="section-sub" style="color:var(--muted-dark);">Straightforward, no-fluff guides on attendance, fees, exams and everyday school administration — written for principals, administrators and teachers, not software engineers.</p>
+    </div>
+  </section>
+
+  <!-- Ad slot 1 — below hero -->
+  <div class="ad-slot">
+    <div class="ad-slot-inner">Advertisement slot — insert Google AdSense unit here once approved</div>
+  </div>
+
+  <!-- ============ POST GRID ============ -->
+  <section class="band" style="padding-top:8px;">
+    <div class="wrap">
+      <div class="blog-grid">
+
+        <!-- ===== SAMPLE POST CARD — duplicate this block per post ===== -->
+        <a href="reduce-fee-defaults.html" class="card post-card">
+          <div class="post-card-thumb">
+            <img src="PLACEHOLDER_POST_IMAGE_1" alt="Fee collection dashboard illustration">
+          </div>
+          <div class="post-card-body">
+            <span class="post-card-tag">Fee Management</span>
+            <h3 class="post-card-title">7 Ways to Reduce Fee Defaults Without Awkward Follow-Up Calls</h3>
+            <p class="post-card-excerpt">Practical, low-friction changes schools can make to fee reminders and collection — none of which involve chasing parents by phone every month.</p>
+            <div class="post-card-meta"><span>6 min read</span><span>·</span><span>Fee Management</span></div>
+            <span class="post-card-link">Read article <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+        <a href="digital-attendance-benefits.html" class="card post-card">
+          <div class="post-card-thumb">
+            <img src="PLACEHOLDER_POST_IMAGE_2" alt="Teacher marking digital attendance on a tablet">
+          </div>
+          <div class="post-card-body">
+            <span class="post-card-tag">Attendance</span>
+            <h3 class="post-card-title">Why Digital Attendance Saves More Than Just Time</h3>
+            <p class="post-card-excerpt">Beyond speed — how switching from registers to digital attendance changes parent communication, record accuracy and exam eligibility tracking.</p>
+            <div class="post-card-meta"><span>5 min read</span><span>·</span><span>Attendance</span></div>
+            <span class="post-card-link">Read article <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+        <a href="exam-result-day-checklist.html" class="card post-card">
+          <div class="post-card-thumb">
+            <img src="PLACEHOLDER_POST_IMAGE_3" alt="Exam coordinator reviewing result sheets">
+          </div>
+          <div class="post-card-body">
+            <span class="post-card-tag">Exams &amp; Results</span>
+            <h3 class="post-card-title">The Result-Day Checklist Every Exam Coordinator Should Have</h3>
+            <p class="post-card-excerpt">A step-by-step checklist for a calmer result day — from marks verification to report card generation, without the usual last-minute scramble.</p>
+            <div class="post-card-meta"><span>7 min read</span><span>·</span><span>Exams &amp; Results</span></div>
+            <span class="post-card-link">Read article <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+        <!-- ===== END SAMPLE POST CARD ===== -->
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Ad slot 2 — below feed -->
+  <div class="ad-slot">
+    <div class="ad-slot-inner">Advertisement slot — insert Google AdSense unit here once approved</div>
+  </div>
+</main>
+
+<div id="site-footer-root"></div>
+
+<script src="../assets/main.js"></script>
+</body>
+</html>
